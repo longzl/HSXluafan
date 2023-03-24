@@ -2,7 +2,7 @@ platform :ios, '8.0'
 
 target 'luafan' do
 
-pod 'CAPKit-3rdparty-libs', '~> 0.1.0'
+pod 'HSXCAPKit-3rdparty-libs', '~> 0.1.0'
 pod 'CAPKit-lua53', '~> 0.1.3'
 
 end
