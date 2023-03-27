@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.dependency 'HSXCAPKit-lua53', '~> 0.1.0'
   s.dependency 'HSXCAPKit-3rdparty-libs', '~> 0.1.0'
 
-  s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/luafan/src $(PODS_ROOT)/CAPKit-lua53/lua-5.3.3/src $(PODS_ROOT)/CAPKit-lua53/lua53" }
+  s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/luafan/src $(PODS_ROOT)/HSXCAPKit-lua53/lua-5.3.3/src $(PODS_ROOT)/HSXCAPKit-lua53/lua53" }
 
 end
