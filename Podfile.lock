@@ -1,0 +1,20 @@
+PODS:
+  - HSXCAPKit-3rdparty-libs (0.1.1)
+  - HSXCAPKit-lua53 (0.1.1)
+
+DEPENDENCIES:
+  - HSXCAPKit-3rdparty-libs (~> 0.1.0)
+  - HSXCAPKit-lua53 (~> 0.1.0)
+
+SPEC REPOS:
+  https://github.com/longzl/PodSpec.git:
+    - HSXCAPKit-3rdparty-libs
+    - HSXCAPKit-lua53
+
+SPEC CHECKSUMS:
+  HSXCAPKit-3rdparty-libs: 59196ee5f4deb3d5ca8238efc36bab1fc2062bb2
+  HSXCAPKit-lua53: 1671b89444bde36f18dcce156a032a2aecf4de5d
+
+PODFILE CHECKSUM: d583a51ddce5ecbf3ed45c1014b4cc3bd3cd97a8
+
+COCOAPODS: 1.11.3

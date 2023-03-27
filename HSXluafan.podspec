@@ -1,14 +1,14 @@
 Pod::Spec.new do |s|
   s.name         = "HSXluafan"
-  s.version      = "0.7.0"
+  s.version      = "0.7.2"
   s.summary      = "luafan library."
   s.description  = <<-DESC
-                   luafan library.
+                   hsxluafan library.
                    DESC
   s.homepage     = "https://github.com/longzl/HSXluafan"
   s.license      = "MIT"
   s.author       = { "longzl" => "longzhili2005@126.com" }
-  s.platform     = :ios, "10.0.0"
+  s.platform     = :ios, "11.0.0"
   s.source       = { :git => "https://github.com/longzl/HSXluafan.git", :tag => "v#{s.version}" }
   
   s.source_files  = "src/*.{h,c}","luafan/*.{h,m}", "src/utlua.c"

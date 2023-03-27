@@ -1,7 +1,7 @@
 package = "luafanlite"
 version = "0.7-2"
 source = {
-   url = "git://github.com/luafan/luafan",
+   url = "git://github.com/longzl/HSXluafan",
    tag = "v0.7.2"
 }
 
@@ -10,7 +10,7 @@ description = {
    detailed = [[
       full coroutine apis: http/httpd tcp/tcpd udp/udpd mariadb fifo.
    ]],
-   homepage = "https://github.com/luafan/luafan",
+   homepage = "https://github.com/longzl/HSXluafan",
    license = "MIT/X11"
 }
 
