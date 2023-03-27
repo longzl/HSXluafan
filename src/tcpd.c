@@ -45,8 +45,8 @@ typedef struct
 
   int send_buffer_size;
   int receive_buffer_size;
-    
-    int interface;
+  
+  int interface;
 
   lua_Number read_timeout;
   lua_Number write_timeout;
