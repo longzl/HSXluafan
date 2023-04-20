@@ -92,7 +92,7 @@ int event_mgr_init()
     initialized = 1;
 
     
-    event_base *event_base = event_mgr_base();
+    struct event_base *event_base = event_mgr_base();
     dnsbase = evdns_base_new(event_base, 1);
     evdns_base_set_option(dnsbase, "randomize-case:", "0");
 
