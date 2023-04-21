@@ -22,7 +22,7 @@
  *
  ***************************************************************************/
 
-#include "curl_setup.h"
+//#include "curl_setup.h"
 
 #if defined(USE_OPENSSL)                                \
   || defined(USE_GSKIT)                                 \
@@ -35,15 +35,93 @@
 #ifdef HAVE_NETINET_IN6_H
 #include <netinet/in6.h>
 #endif
-#include "curl_memrchr.h"
+//#include "curl_memrchr.h"
 
 #include "hostcheck.h"
-#include "strcase.h"
-#include "hostip.h"
+//#include "strcase.h"
+//#include "hostip.h"
 
-#include "curl_memory.h"
+//#include "curl_memory.h"
 /* The last #include file should be: */
-#include "memdebug.h"
+//#include "memdebug.h"
+
+
+#undef DEBUGASSERT
+#if defined(DEBUGBUILD) && defined(HAVE_ASSERT_H)
+#define DEBUGASSERT(x) assert(x)
+#else
+#define DEBUGASSERT(x) do { } while(0)
+#endif
+
+int
+Curl_inet_pton(int af, const char *src, void *dst)
+{
+  switch(af) {
+  case AF_INET:
+    return (inet_pton4(src, (unsigned char *)dst));
+#ifdef ENABLE_IPV6
+  case AF_INET6:
+    return (inet_pton6(src, (unsigned char *)dst));
+#endif
+  default:
+    errno = EAFNOSUPPORT;
+    return (-1);
+  }
+  /* NOTREACHED */
+}
+
+bool Curl_host_is_ipnum(const char *hostname)
+{
+  struct in_addr in;
+#ifdef ENABLE_IPV6
+  struct in6_addr in6;
+#endif
+  if(Curl_inet_pton(AF_INET, hostname, &in) > 0
+#ifdef ENABLE_IPV6
+     || Curl_inet_pton(AF_INET6, hostname, &in6) > 0
+#endif
+    )
+    return TRUE;
+  return FALSE;
+}
+
+#define strncasecompare(a,b,c) Curl_strncasecompare(a,b,c)
+
+int Curl_strncasecompare(const char *first, const char *second, size_t max)
+{
+  while(*first && *second && max) {
+    if(Curl_raw_toupper(*first) != Curl_raw_toupper(*second)) {
+      break;
+    }
+    max--;
+    first++;
+    second++;
+  }
+  if(0 == max)
+    return 1; /* they are equal this far */
+
+  return Curl_raw_toupper(*first) == Curl_raw_toupper(*second);
+}
+
+#define memrchr(x,y,z) Curl_memrchr((x),(y),(z))
+
+void *
+Curl_memrchr(const void *s, int c, size_t n)
+{
+  if(n > 0) {
+    const unsigned char *p = s;
+    const unsigned char *q = s;
+
+    p += n - 1;
+
+    while(p >= q) {
+      if(*p == (unsigned char)c)
+        return (void *)p;
+      p--;
+    }
+  }
+  return NULL;
+}
 
 /* check the two input strings with given length, but do not
    assume they end in nul-bytes */
