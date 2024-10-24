@@ -1794,10 +1794,10 @@ LUA_API int luaopen_fan_http_core(lua_State *L)
         curl_share_setopt(share_handle, CURLSHOPT_UNLOCKFUNC, unlock_function);
         curl_share_setopt(share_handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
 
-        pthread_mutexattr_t a;
-        pthread_mutexattr_init(&a);
-        pthread_mutexattr_settype(&a, PTHREAD_MUTEX_RECURSIVE);
-        pthread_mutex_init(&share_lock, &a);
+        // pthread_mutexattr_t a;
+        // pthread_mutexattr_init(&a);
+        // pthread_mutexattr_settype(&a, PTHREAD_MUTEX_RECURSIVE);
+        // pthread_mutex_init(&share_lock, &a);
     }
 #endif
     if (!timer_event)
