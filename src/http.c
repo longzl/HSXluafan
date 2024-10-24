@@ -1784,7 +1784,9 @@ extern void reset_dns_servers()
 
 LUA_API int luaopen_fan_http_core(lua_State *L)
 {
+    fprintf(stderr,"luaopen_fan_http_core 1\n");
     curl_global_init(CURL_GLOBAL_ALL);
+    fprintf(stderr,"luaopen_fan_http_core 2\n");
 
 #if TARGET_OS_IPHONE || defined(ANDROID) || defined(__ANDROID__)
     if (!share_handle)
