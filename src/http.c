@@ -9,6 +9,7 @@
 
 #define MSG_OUT stdout /* Send info to stdout, change to stderr if you want */
 
+static struct event_base *ebase;
 static struct event *timer_event;
 static struct event *timer_check_multi_info;
 static CURLM *multi;
@@ -1700,6 +1701,11 @@ static void reset_dns_servers_timercb(int fd, short kind, void *userp)
         free(dns_servers);
         dns_servers = NULL;
     }
+    
+    if(!event_mgr_dnsbase())
+    {
+        return;
+    }
 
     evdns_base_clear_nameservers_and_suspend(event_mgr_dnsbase());
 
@@ -1786,7 +1792,7 @@ LUA_API int luaopen_fan_http_core(lua_State *L)
 {
     fprintf(stderr,"luaopen_fan_http_core 1\n");
     curl_global_init(CURL_GLOBAL_ALL);
-    fprintf(stderr,"luaopen_fan_http_core 2\n");
+    fprintf(stderr,"luaopen_fan_http_core 2-\n");
 
 #if TARGET_OS_IPHONE || defined(ANDROID) || defined(__ANDROID__)
     if (!share_handle)
@@ -1795,27 +1801,38 @@ LUA_API int luaopen_fan_http_core(lua_State *L)
         curl_share_setopt(share_handle, CURLSHOPT_LOCKFUNC, lock_function);
         curl_share_setopt(share_handle, CURLSHOPT_UNLOCKFUNC, unlock_function);
         curl_share_setopt(share_handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
-
+        fprintf(stderr,"luaopen_fan_http_core 3\n");
         // pthread_mutexattr_t a;
         // pthread_mutexattr_init(&a);
         // pthread_mutexattr_settype(&a, PTHREAD_MUTEX_RECURSIVE);
         // pthread_mutex_init(&share_lock, &a);
     }
 #endif
+    fprintf(stderr,"luaopen_fan_http_core 4\n");
+    if(!ebase){
+        ebase = event_mgr_base();
+    }
     if (!timer_event)
     {
-        timer_event = evtimer_new(event_mgr_base(), timer_cb, NULL);
+        fprintf(stderr,"luaopen_fan_http_core 4-1\n");
+        fprintf(stderr,"luaopen_fan_http_core 4-3\n");
+        fprintf(stderr,"luaopen_fan_http_core 5 %p  %p\n",(void*)ebase);
+        timer_event = evtimer_new(ebase, timer_cb, NULL);
+        fprintf(stderr,"luaopen_fan_http_core 6\n");
     }
 
-    if (!timer_check_multi_info)
-    {
-        timer_check_multi_info =
-            evtimer_new(event_mgr_base(), timer_check_multi_info_cb, NULL);
-    }
+     if (!timer_check_multi_info)
+     {
+         //struct event_base *eb2 = event_mgr_base();
+         fprintf(stderr,"luaopen_fan_http_core 7 %p \n",(void*)ebase);
+         timer_check_multi_info = evtimer_new(ebase, timer_check_multi_info_cb, NULL);
+         fprintf(stderr,"luaopen_fan_http_core 8\n");
+     }
 
+    fprintf(stderr,"luaopen_fan_http_core 9\n");
     lua_newtable(L);
     luaL_register(L, "http", httplib);
-
+    fprintf(stderr,"luaopen_fan_http_core 10\n");
     lua_pushstring(L, curl_version());
     lua_setfield(L, -2, "curl_version");
 

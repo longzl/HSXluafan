@@ -1,4 +1,4 @@
-VERSION="v0.7.8"
+VERSION="v0.7.9"
 NAME="HSXluafan"
 export https_proxy=http://127.0.0.1:7897;export http_proxy=http://127.0.0.1:7897;export all_proxy=socks5://127.0.0.1:7897
 git add .
