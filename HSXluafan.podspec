@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "HSXluafan"
-  s.version      = "0.7.8"
+  s.version      = "0.7.10"
   s.summary      = "luafan library."
   s.description  = <<-DESC
                    hsxluafan library.
